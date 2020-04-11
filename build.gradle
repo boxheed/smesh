@@ -4,6 +4,7 @@ plugins {
   id 'pl.allegro.tech.build.axion-release' version '1.11.0'
   id "com.github.ben-manes.versions" version "0.28.0"
   id "com.fizzpod.info" version "5.2.0" apply false
+  id "nebula.nebula-bintray" version "8.4.0"
 }
 
 scmVersion {
@@ -27,8 +28,9 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'java'
     apply plugin: 'eclipse'
-    apply plugin: "com.fizzpod.info"
-    
+    apply plugin: 'com.fizzpod.info'
+    apply plugin: 'jacoco'
+
     sourceCompatibility = '11'
 
     dependencyManagement {
@@ -44,6 +46,20 @@ subprojects {
       all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
       all*.exclude module: "spring-boot-starter-tomcat"
     }
+
+    //Configure Jacoco
+    jacoco {
+      toolVersion = "0.8.5"
+    }
+
+    jacocoTestReport {
+      reports {
+        xml.enabled true
+        csv.enabled false
+      }
+    }
+
+    build.dependsOn jacocoTestReport
   }
 
   //Apply the spring boot servlet app 
