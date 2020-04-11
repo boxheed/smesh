@@ -1,0 +1,29 @@
+
+dependencies {
+
+  implementation project(':smesh-core-lib')
+  implementation project(':smesh-core-spring-lib')
+  implementation project(':smesh-core-hazelcast-lib')
+  implementation project(':smesh-spring-integration-lib')
+  	
+  implementation 'org.springframework.integration:spring-integration-core'
+  implementation 'org.springframework.integration:spring-integration-scripting'
+  implementation 'org.springframework.integration:spring-integration-file'
+  
+  implementation 'joda-time:joda-time:2.9.2'
+  implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.6.5'
+  
+  implementation 'com.jayway.jsonpath:json-path:2.1.0'
+	
+  implementation 'com.hazelcast:hazelcast:4.0'
+
+  implementation 'com.github.jknack:handlebars:4.0.4'
+  implementation 'com.github.jknack:handlebars-jackson2:1.0.0'
+  implementation 'com.github.jknack:handlebars-helpers:4.0.4'
+
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+}
