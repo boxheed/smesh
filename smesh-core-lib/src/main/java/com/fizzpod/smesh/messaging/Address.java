@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({ "destination"})
+@JsonPropertyOrder({ "name", "destination"})
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 7380322958623380412L;
@@ -69,7 +69,7 @@ public class Address implements Serializable {
      * <p>
      * The trace id for the span.
      * 
-     * @param id The id
+     * @param name The name
      */
     @JsonProperty("name")
     public void setName(String name) {
