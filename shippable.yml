@@ -14,7 +14,6 @@ build:
 
   on_success:
     - source <(curl -s https://raw.githubusercontent.com/boxheed/shippable-scripts/1.4/java-on-success)
-    - bash <(curl -s https://codecov.io/bash)
 
   on_failure:
     - source <(curl -s https://raw.githubusercontent.com/boxheed/shippable-scripts/1.4/java-on-success)
