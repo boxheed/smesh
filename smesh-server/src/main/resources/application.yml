@@ -1,0 +1,26 @@
+server:
+  port: 2468
+
+security:
+  basic:
+    enable: false
+  ignored: /**
+  
+spring:
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+  application:
+    name: smesh
+  cloud:
+    config:
+      enabled: false
+
+      
+smesh:
+  services:
+    filecontextpath: file:C:/temp/smesh-service-context.xml
+
+  
+  
+  

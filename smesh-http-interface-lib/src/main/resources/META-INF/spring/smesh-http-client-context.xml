@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:feed="http://www.springframework.org/schema/integration/feed"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-hazelcast="http://www.springframework.org/schema/integration/hazelcast"
+	xmlns:script="http://www.springframework.org/schema/integration/scripting"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration/feed http://www.springframework.org/schema/integration/feed/spring-integration-feed.xsd
+	    http://www.springframework.org/schema/integration/hazelcast https://www.springframework.org/schema/integration/hazelcast/spring-integration-hazelcast.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration/script http://www.springframework.org/schema/integration/script.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
+
+
+	<int:annotation-config />
+
+	<!-- Inbound/Outbound Channels -->
+	<int:channel id="inboundChannel">
+		<int:interceptors>
+			<int:wire-tap channel="logger" />
+		</int:interceptors>
+	</int:channel>
+
+	<int:channel id="outboundChannel" />
+	
+	<int:channel id="responseChannel" />
+
+	<!-- Convert message to smesh message payload -->
+	<!-- TODO Need to extract the service name from the request URL -->
+	<int:channel-interceptor
+		pattern="inboundChannel" order="1">
+		<bean
+			class="com.fizzpod.smesh.integration.SmeshPayloadMessageInterceptor" />
+	</int:channel-interceptor>
+
+	<!-- Add trace information onto the message -->
+	<int:channel-interceptor
+		pattern="inboundChannel, outboundChannel, responseChannel" order="2">
+		<bean class="com.fizzpod.smesh.integration.SmeshTraceInterceptor">
+			<constructor-arg
+				value="${spring.application.name:smesh}" />
+		</bean>
+	</int:channel-interceptor>
+
+	<int:service-activator input-channel="inboundChannel" output-channel="responseChannel"
+                       ref="smeshServiceActivator" method="callService"/>
+
+	
+	<int-http:inbound-gateway
+	    request-channel="inboundChannel"
+	    reply-channel="responseChannel"
+	    supported-methods="GET, POST, DELETE, PUT, PATCH"
+	    path="/smesh/services/{name}/">
+	    <int-http:request-mapping
+	            consumes="application/json" produces="application/json"/>
+	    <int-http:header name="X-SMESH-SERVICE-NAME" expression="#pathVariables.name"/>
+	</int-http:inbound-gateway>
+	
+
+	<int:logging-channel-adapter id="logger"
+		level="INFO" log-full-message="true" />
+
+
+	<!-- <bean id="kafkaJsonSerialiser" class="com.mango.prov.kafka.KafkaJsonSerializer"> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kafkaStringSerialiser" class="org.apache.kafka.common.serialization.StringSerializer"> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kafkaJsonDeserialiser" class="com.mango.prov.kafka.KafkaJsonDeserializer"> -->
+	<!-- <constructor-arg name="targetClass" value="com.mango.prov.messaging.Parcel"></constructor-arg> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kafkaStringDeserialiser" class="org.apache.kafka.common.serialization.StringDeserializer"> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kafkaJsonDecoder" class="com.mango.prov.kafka.KafkaJsonDecoder"> -->
+	<!-- <constructor-arg name="targetClass" value="com.mango.prov.messaging.Parcel"></constructor-arg> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kafkaJsonEncoder" class="com.mango.prov.kafka.KafkaJsonEncoder"> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kafkaStringEncoder" -->
+	<!-- class="org.springframework.integration.kafka.serializer.common.StringEncoder"> -->
+	<!-- </bean> -->
+
+	<!-- <bean id="kafkaStringDecoder" -->
+	<!-- class="org.springframework.integration.kafka.serializer.common.StringDecoder"> -->
+	<!-- </bean> -->
+
+
+</beans>

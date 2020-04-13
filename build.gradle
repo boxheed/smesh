@@ -1,0 +1,155 @@
+plugins {
+  id 'org.springframework.boot' version '2.2.6.RELEASE' apply false
+  id 'io.spring.dependency-management' version '1.0.9.RELEASE' apply false
+  id 'pl.allegro.tech.build.axion-release' version '1.11.0'
+  id "com.github.ben-manes.versions" version "0.28.0"
+  id "com.fizzpod.info" version "5.2.0" apply false
+  id "com.jfrog.bintray" version "1.8.5" apply false
+}
+
+scmVersion {
+  tag {
+    prefix = 'release-'
+  }
+}
+
+allprojects {
+  repositories {
+    mavenCentral()
+  }
+
+  group = 'com.fizzpod'
+  project.version = scmVersion.version
+}
+
+subprojects {
+  if (it.name =~ /.*server/ || it.name =~ /.*lib/) {
+    
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'com.fizzpod.info'
+    apply plugin: 'jacoco'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.jfrog.bintray'
+
+    sourceCompatibility = '11'
+
+    dependencyManagement {
+      imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-starter-parent:Hoxton.SR3'
+        mavenBom 'org.springframework.boot:spring-boot-starter-parent:2.2.6.RELEASE'
+      }
+    }
+
+    //Exclude the log4j dependencies as will use logback
+    configurations {
+      all*.exclude group: 'log4j', module: 'log4j'
+      all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+      all*.exclude module: "spring-boot-starter-tomcat"
+    }
+
+    //Configure Jacoco
+    jacoco {
+      toolVersion = "0.8.5"
+    }
+
+    jacocoTestReport {
+      reports {
+        xml.enabled true
+        csv.enabled false
+      }
+    }
+
+    build.dependsOn jacocoTestReport
+
+    //configure publishing 
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+
+    project.tasks.findAll {
+      it.name.startsWith("publish")
+    }.each {
+      it.dependsOn assemble
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifact sourcesJar
+                artifact javadocJar
+            }
+        }
+    }
+
+    bintray {
+      user = project.hasProperty("bintray_user")? bintray_user: "";
+      key = project.hasProperty("bintray_api_key")? bintray_api_key: ""
+      //Dry run set to true and publish set to false, these should be explicitly set
+      dryRun = false //Whether to run this as dry-run, without deploying
+      publish = true //If version should be auto published after an upload
+      publications = ['mavenJava']
+      pkg {
+        websiteUrl = 'https://github.com/boxheed/' + rootProject.name
+        issueTrackerUrl = 'https://github.com/boxheed/' + rootProject.name + '/issues'
+        vcsUrl = 'https://github.com/boxheed/' + rootProject.name + '.git'
+        labels = []
+        repo = 'maven'
+        name = rootProject.name
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
+      }
+    }
+
+  }
+
+  //Apply the spring boot servlet app 
+  if (it.name =~ /.*server/) {
+    apply plugin: 'org.springframework.boot'
+
+    dependencies {
+      implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    }
+    publishing {
+      publications {
+        bootJava(MavenPublication) {
+          artifact bootJar
+          artifactId bootJar.baseName
+        }
+      }
+    }
+    bintray {
+      user = project.hasProperty("bintray_user")? bintray_user: "";
+      key = project.hasProperty("bintray_api_key")? bintray_api_key: ""
+      //Dry run set to true and publish set to false, these should be explicitly set
+      dryRun = true //Whether to run this as dry-run, without deploying
+      publish = false //If version should be auto published after an upload
+      publications = ['bootJava']
+      pkg {
+        websiteUrl = 'https://github.com/boxheed/' + rootProject.name
+        issueTrackerUrl = 'https://github.com/boxheed/' + rootProject.name + '/issues'
+        vcsUrl = 'https://github.com/boxheed/' + rootProject.name + '.git'
+        labels = []
+        repo = 'maven'
+        name = rootProject.name
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
+      }
+    }
+  }
+}
+
