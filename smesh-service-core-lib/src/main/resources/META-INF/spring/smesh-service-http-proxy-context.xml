@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:feed="http://www.springframework.org/schema/integration/feed"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:int-hazelcast="http://www.springframework.org/schema/integration/hazelcast"
+	xmlns:script="http://www.springframework.org/schema/integration/scripting"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration/feed http://www.springframework.org/schema/integration/feed/spring-integration-feed.xsd
+	    http://www.springframework.org/schema/integration/hazelcast https://www.springframework.org/schema/integration/hazelcast/spring-integration-hazelcast.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration/script http://www.springframework.org/schema/integration/script.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
+
+
+	<int:channel id="smeshHttpProxyServiceInboundChannel">
+		<int:interceptors>
+			<int:wire-tap channel="logger" />
+		</int:interceptors>
+	</int:channel>
+
+	<int:channel id="smeshHttpProxyServiceOutboundChannel" />
+
+	<int:inbound-channel-adapter
+		ref="smeshHttpProxyServiceAdapter" method="take"
+		channel="smeshHttpProxyServiceInboundChannel">
+		<int:poller fixed-rate="10" />
+	</int:inbound-channel-adapter>
+
+	<int:outbound-channel-adapter
+		channel="smeshHttpProxyServiceOutboundChannel" ref="smeshHttpProxyServiceAdapter"
+		method="respond" />
+
+	<int:service-activator
+		input-channel="smeshHttpProxyServiceInboundChannel"
+		output-channel="smeshHttpProxyServiceOutboundChannel" ref="echoActivator"
+		method="call" />
+
+	<bean id="smeshHttpProxyServiceAdapter"
+		class="com.fizzpod.smesh.integration.SmeshServiceAdapter"
+		factory-method="getAdapter" factory-bean="smeshServiceAdapterFactory">
+		<constructor-arg value="httpproxy" />
+	</bean>
+
+
+</beans>
