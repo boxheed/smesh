@@ -16,7 +16,7 @@ import com.fizzpod.smesh.integration.SmeshSpringIntegrationConfiguration;
 @Import({ SmeshSpringIntegrationConfiguration.class, SmeshSpringConfiguration.class })
 @EnableIntegration
 @EnableAsync
-@Profile("smesh-service-http-proxy")
+//@Profile("smesh-service-http-proxy")
 public class SmeshHttpProxyServiceConfiguration {
     
 

@@ -25,23 +25,34 @@
 			<int:wire-tap channel="logger" />
 		</int:interceptors>
 	</int:channel>
+	
+	<int:channel-interceptor
+		pattern="smeshHttpProxyServiceInboundChannel" order="1">
+		<bean
+			class="com.fizzpod.smesh.integration.SmeshParcelHeaderToMessageHeaderMergingInterceptor" />
+	</int:channel-interceptor>
 
 	<int:channel id="smeshHttpProxyServiceOutboundChannel" />
 
 	<int:inbound-channel-adapter
 		ref="smeshHttpProxyServiceAdapter" method="take"
 		channel="smeshHttpProxyServiceInboundChannel">
-		<int:poller fixed-rate="10" />
+		<int:poller fixed-rate="60" />
+		
 	</int:inbound-channel-adapter>
 
-	<int:outbound-channel-adapter
-		channel="smeshHttpProxyServiceOutboundChannel" ref="smeshHttpProxyServiceAdapter"
-		method="respond" />
+	<int-http:outbound-gateway
+		id="smeshHttpProxyServiceOutboundGateway"
+		request-channel="smeshHttpProxyServiceInboundChannel"
+		url="http://10.154.1.214:2468/smesh/services/testecho/" http-method="GET"
+		extract-request-payload="false"
+		expected-response-type="java.lang.String" charset="UTF-8"
+		reply-channel="smeshHttpProxyServiceOutboundChannel" />
 
-	<int:service-activator
-		input-channel="smeshHttpProxyServiceInboundChannel"
-		output-channel="smeshHttpProxyServiceOutboundChannel" ref="echoActivator"
-		method="call" />
+
+	<int:outbound-channel-adapter
+		channel="smeshHttpProxyServiceOutboundChannel"
+		ref="smeshHttpProxyServiceAdapter" method="respond" />
 
 	<bean id="smeshHttpProxyServiceAdapter"
 		class="com.fizzpod.smesh.integration.SmeshServiceAdapter"
