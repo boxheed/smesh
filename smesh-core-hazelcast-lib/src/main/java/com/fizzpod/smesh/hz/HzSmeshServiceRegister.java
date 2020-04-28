@@ -4,11 +4,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import com.fizzpod.smesh.SmeshService;
 import com.fizzpod.smesh.SmeshServiceDefinition;
 import com.fizzpod.smesh.SmeshServiceRegister;
 import com.fizzpod.smesh.messaging.Address;
+import com.hazelcast.cluster.Member;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 
@@ -43,10 +45,15 @@ public class HzSmeshServiceRegister implements SmeshServiceRegister {
 
     @Override
     public SmeshService getService(String serviceName) {
+        return getHzSmeshService(serviceName);
+    }
+    
+    private HzSmeshService getHzSmeshService(String serviceName) {
         if(services.containsKey(serviceName)) {
             SmeshServiceDefinition definition = services.get(serviceName);
             return new HzSmeshService(hazelcast, definition, pool);
         } else {
+            //TODO update to more managed exceptions
             throw new RuntimeException("Service with name " + serviceName + " does not exist");
         }
     }
@@ -69,7 +76,7 @@ public class HzSmeshServiceRegister implements SmeshServiceRegister {
 
     @Override
     public SmeshService registerService(String serviceName) {
-        SmeshService service = null;
+        HzSmeshService service = null;
         if(!this.hasService(serviceName)) {
             Address serviceAddress = new Address();
             serviceAddress.setName(serviceName);
@@ -78,8 +85,11 @@ public class HzSmeshServiceRegister implements SmeshServiceRegister {
             this.services.put(definition.getName(), definition);
             service = new HzSmeshService(hazelcast, definition, pool);
         } else {
-            service = this.getService(serviceName);
+            service = this.getHzSmeshService(serviceName);
         }
+        Member localMember = hazelcast.getCluster().getLocalMember();
+        UUID localMemberId = localMember.getUuid();
+        service.addServiceMember(localMemberId);
         return service;
     }
 

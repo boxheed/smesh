@@ -1,6 +1,11 @@
 package com.fizzpod.smesh.hz;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -22,6 +27,7 @@ public class HzSmeshService implements SmeshService, Serializable {
     private HazelcastInstance hazelcast;
     private SmeshServiceDefinition definition;
     private HzResponseQueuePool hzResponseQueuePool;
+    private Set<UUID> hzServiceMembers = new HashSet<>();
 
     public HzSmeshService(HazelcastInstance hazelcast, SmeshServiceDefinition definition,
             HzResponseQueuePool hzResponseQueuePool) {
@@ -79,6 +85,20 @@ public class HzSmeshService implements SmeshService, Serializable {
             LOGGER.error("An error occurred polling queue {}", recipientAddress, e);
         }
         return parcel;
+    }
+    
+    public Collection<UUID> getServiceMembers() {
+        return Collections.unmodifiableCollection(this.hzServiceMembers);
+    }
+    
+    public Collection<UUID> addServiceMember(UUID uuid) {
+        this.hzServiceMembers.add(uuid);
+        return this.getServiceMembers();
+    }
+    
+    public Collection<UUID> removeServiceMember(UUID uuid) {
+        this.hzServiceMembers.remove(uuid);
+        return this.getServiceMembers();
     }
 
 }

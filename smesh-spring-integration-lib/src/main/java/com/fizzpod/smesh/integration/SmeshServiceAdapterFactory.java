@@ -13,15 +13,6 @@ public class SmeshServiceAdapterFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SmeshServiceAdapterFactory.class);
     
-//    @Autowired
-//    private HazelcastInstance hazelcast;
-//
-//    @Autowired
-//    private HzResponseQueuePool pool;
-//    
-//    @Autowired
-//    private SmeshServiceRegistrar registrar;
-
     private Smesh smesh;
     
     public SmeshServiceAdapterFactory(Smesh smesh) {

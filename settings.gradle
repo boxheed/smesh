@@ -5,4 +5,5 @@ include 'smesh-core-lib',
   'smesh-http-interface-lib',
   'smesh-service-core-lib',
   'smesh-spring-integration-lib',
-  'smesh-server'
+  'smesh-server',
+  'smesh-service-experimental-lib'
