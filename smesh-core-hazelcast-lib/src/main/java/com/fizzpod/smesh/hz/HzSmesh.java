@@ -10,9 +10,9 @@ public class HzSmesh implements Smesh {
     private HzSmeshServiceRegister register;
     private HazelcastInstance hazelcast;
 
-    public HzSmesh(HazelcastInstance hazelcast, HzSmeshServiceRegister register) {
-        this.register = register;
+    public HzSmesh(HazelcastInstance hazelcast) {
         this.hazelcast = hazelcast;
+        this.register = new HzSmeshServiceRegister(hazelcast);
     }
 
     @Override
