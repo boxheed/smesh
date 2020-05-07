@@ -251,8 +251,6 @@
 		<entry-listeners>
             <entry-listener include-value="true" local="false">com.fizzpod.smesh.hz.events.HzSmeshRegistryEventListenerAdapter</entry-listener>
         </entry-listeners>
-
-
     </map>
     
     <topic name="smesh-events">
