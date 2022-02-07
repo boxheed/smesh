@@ -1,10 +1,10 @@
 plugins {
-  id 'org.springframework.boot' version '2.2.6.RELEASE' apply false
-  id 'io.spring.dependency-management' version '1.0.9.RELEASE' apply false
-  id 'pl.allegro.tech.build.axion-release' version '1.11.0'
-  id "com.github.ben-manes.versions" version "0.28.0"
-  id "com.fizzpod.info" version "5.2.0" apply false
-  id "com.jfrog.bintray" version "1.8.5" apply false
+  id 'org.springframework.boot' version '2.6.3' apply false
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+  id 'pl.allegro.tech.build.axion-release' version '1.13.6'
+  id "com.github.ben-manes.versions" version "0.42.0"
+  id "com.fizzpod.info" version "11.2.1" apply false
+  //id "com.jfrog.bintray" version "1.8.5" apply false
 }
 
 scmVersion {
@@ -97,24 +97,7 @@ subprojects {
         }
     }
 
-    bintray {
-      user = project.hasProperty("bintray_user")? bintray_user: "";
-      key = project.hasProperty("bintray_api_key")? bintray_api_key: ""
-      //Dry run set to true and publish set to false, these should be explicitly set
-      dryRun = false //Whether to run this as dry-run, without deploying
-      publish = true //If version should be auto published after an upload
-      publications = ['mavenJava']
-      pkg {
-        websiteUrl = 'https://github.com/boxheed/' + rootProject.name
-        issueTrackerUrl = 'https://github.com/boxheed/' + rootProject.name + '/issues'
-        vcsUrl = 'https://github.com/boxheed/' + rootProject.name + '.git'
-        labels = []
-        repo = 'maven'
-        name = rootProject.name
-        licenses = ['Apache-2.0']
-        publicDownloadNumbers = true
-      }
-    }
+
 
   }
 
