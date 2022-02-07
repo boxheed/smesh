@@ -32,7 +32,7 @@ subprojects {
     apply plugin: 'com.fizzpod.info'
     apply plugin: 'jacoco'
     apply plugin: 'maven-publish'
-    apply plugin: 'com.jfrog.bintray'
+
 
     sourceCompatibility = '11'
 
@@ -122,24 +122,7 @@ subprojects {
       }
     }
 
-    bintray {
-      user = project.hasProperty("bintray_user")? bintray_user: "";
-      key = project.hasProperty("bintray_api_key")? bintray_api_key: ""
-      //Dry run set to true and publish set to false, these should be explicitly set
-      dryRun = false //Whether to run this as dry-run, without deploying
-      publish = true //If version should be auto published after an upload
-      publications = ['bootJava']
-      pkg {
-        websiteUrl = 'https://github.com/boxheed/' + rootProject.name
-        issueTrackerUrl = 'https://github.com/boxheed/' + rootProject.name + '/issues'
-        vcsUrl = 'https://github.com/boxheed/' + rootProject.name + '.git'
-        labels = []
-        repo = 'maven'
-        name = rootProject.name
-        licenses = ['Apache-2.0']
-        publicDownloadNumbers = true
-      }
-    }
+
   }
 }
 
