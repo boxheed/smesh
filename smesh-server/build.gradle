@@ -4,16 +4,16 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	implementation 'com.hazelcast:hazelcast:4.0'
-  implementation 'com.hazelcast:hazelcast-spring:4.0'
+	implementation 'com.hazelcast:hazelcast'
+  implementation 'com.hazelcast:hazelcast-spring'
 
-  implementation 'com.github.jknack:handlebars-helpers:4.0.4'
+  implementation 'com.github.jknack:handlebars-helpers'
 
   	
-  implementation 'com.github.dtmo.jfiglet:jfiglet:1.0.0'
+  implementation 'com.github.dtmo.jfiglet:jfiglet:1.0.1'
   
-  implementation 'org.apache.commons:commons-lang3:3.10'
-  implementation 'commons-io:commons-io:2.6'
+  implementation 'org.apache.commons:commons-lang3'
+  implementation 'commons-io:commons-io'
 
   implementation project(':smesh-core-lib')
   implementation project(':smesh-core-hazelcast-lib')

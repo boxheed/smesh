@@ -4,13 +4,13 @@ dependencies {
     
   implementation 'org.slf4j:slf4j-api'
   
-  implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.6.5'
+  implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
   
-  implementation 'com.google.guava:guava:29.0-jre'
+  implementation 'com.google.guava:guava'
   
-  api 'com.hazelcast:hazelcast:4.0'
+  api 'com.hazelcast:hazelcast'
 
-  testImplementation 'junit:junit:4.11'
-  testImplementation 'org.mockito:mockito-all:1.10.8'
+  testImplementation 'junit:junit'
+  testImplementation 'org.mockito:mockito-all'
 
 }
