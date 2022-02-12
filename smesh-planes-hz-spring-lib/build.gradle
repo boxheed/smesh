@@ -1,0 +1,15 @@
+
+dependencies {
+  implementation project(':smesh-planes-lib')
+  implementation project(':smesh-planes-hz-lib')
+  
+  implementation 'org.springframework:spring-context'
+
+  implementation 'org.slf4j:slf4j-api'
+  implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
+	implementation 'com.hazelcast:hazelcast'
+
+  testImplementation 'junit:junit'
+  testImplementation 'org.mockito:mockito-all'
+
+}

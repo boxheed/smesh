@@ -1,9 +1,12 @@
 rootProject.name = 'smesh'
-include 'smesh-core-lib',
-  'smesh-core-hazelcast-lib',
-  'smesh-core-spring-lib',
-  'smesh-spring-integration-lib',
-  'smesh-http-interface-lib',
-  'smesh-service-core-lib',
-  'smesh-server',
-  'smesh-service-experimental-lib'
+include 'smesh-planes-lib',
+  'smesh-planes-hz-lib',
+  'smesh-planes-hz-spring-lib',
+  'smesh-server'
+
+//  'smesh-service-core-lib',
+//  'smesh-core-hazelcast-lib',
+//  'smesh-http-interface-lib',
+//  'smesh-spring-integration-lib',
+//  'smesh-service-experimental-lib',
+//  'smesh-core-lib',

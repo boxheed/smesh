@@ -1,0 +1,16 @@
+
+dependencies {
+  implementation project(':smesh-planes-lib')
+    
+  implementation 'org.slf4j:slf4j-api'
+  
+  implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
+  
+  implementation 'com.google.guava:guava'
+  
+  api 'com.hazelcast:hazelcast'
+
+  testImplementation 'junit:junit'
+  testImplementation 'org.mockito:mockito-all'
+
+}
