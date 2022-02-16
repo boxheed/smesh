@@ -12,7 +12,7 @@ public class HzServiceEntry implements Serializable {
     private ServiceDefinition definition;
     
     private UUID memberId;
-
+    
     public HzServiceEntry() {
         
     }

@@ -1,7 +1,9 @@
 package com.fizzpod.smesh.hz.planes.control;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,7 +24,7 @@ public class HzRouter implements Router, Serializable {
     }
 
     public HzRoute getRoute(Parcel parcel) {
-        Set<UUID> memberIds = new HashSet<>();
+        List<UUID> memberIds = new LinkedList<>();
         String address = parcel.getAddress();
         for (HzServiceEntry entry : serviceRoutes) {
             for (String route : entry.getDefinition().getRoutes()) {
@@ -32,7 +34,11 @@ public class HzRouter implements Router, Serializable {
                 }
             }
         }
-        return new HzRoute(hazelcast, memberIds);
+        Collections.shuffle(memberIds);
+        if(memberIds.size() == 0) {
+            throw new RuntimeException("No route to" + parcel.getAddress());
+        }
+        return new HzRoute(hazelcast, Collections.singleton(memberIds.get(0)));
     }
 
 }

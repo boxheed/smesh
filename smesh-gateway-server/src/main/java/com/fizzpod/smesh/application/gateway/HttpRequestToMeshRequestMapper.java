@@ -1,8 +1,6 @@
 package com.fizzpod.smesh.application.gateway;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map.Entry;
@@ -12,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -45,7 +44,11 @@ public class HttpRequestToMeshRequestMapper {
     }
 
     private void copyPath(HttpServletRequest request, Parcel meshRequest) {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(request.getRequestURI());
+        
+        String path = request.getRequestURI();
+        path = StringUtils.removeStart(path, SmeshGatewayController.CONTROLLER_PATH);
+        
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(path);
         builder.query(request.getQueryString());
         UriComponents components = builder.build();
         meshRequest.setPath(components.getPath());

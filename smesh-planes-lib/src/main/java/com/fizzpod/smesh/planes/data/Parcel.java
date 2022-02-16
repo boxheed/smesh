@@ -148,7 +148,7 @@ public class Parcel implements Serializable {
      * <p>
      * The payload of the message. (Required)
      * 
-     * @param payload The payload
+     * @param body The body content
      */
     @JsonProperty("body")
     public void setBody(Object body) {

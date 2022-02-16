@@ -11,6 +11,7 @@ public class HzRoute implements MemberSelector {
 
     private HazelcastInstance hazelcast;
     private Collection<UUID> members;
+    private boolean matched = false;
 
 
     public HzRoute(HazelcastInstance hazelcast, Collection<UUID> members) {
@@ -21,7 +22,11 @@ public class HzRoute implements MemberSelector {
     
     @Override
     public boolean select(Member member) {
-        return members.contains(member.getUuid());
+        if(!matched && members.contains(member.getUuid())) {
+            matched = true;
+            return true;
+        }
+        return false;
     }
 
 }

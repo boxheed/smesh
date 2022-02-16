@@ -15,17 +15,18 @@ public class TestService implements Function<Parcel, Parcel>{
     @Override
     public Parcel apply(Parcel request) {
         Parcel response = new Parcel();
-        response.setStatus(200);
+        response.setStatus(201);
         response.setHeaders(request.getHeaders());
         Map<String, Object> body = new HashMap<>();
         body.put("name", "freddy");
         body.put("request", request);
         response.setBody(body);
+        System.out.println("BANANA");
         return response;
     }
     
     public ServiceDefinition getDefinition() {
-        Collection<String> routes = Arrays.asList(new String[] {"/testy/*"});
+        Collection<String> routes = Arrays.asList(new String[] {"/testy.*"});
         HzServiceDefinition definition = new HzServiceDefinition(this.getClass().getName(), routes);
         return definition;
     }

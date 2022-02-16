@@ -26,11 +26,11 @@ public class SmeshGatewayConfiguration {
         return new ParcelToHttpResponseMapper();
     }
     
-    @Bean 
-    public TestService createService() {
-        TestService service = new TestService();
-        controlPlane.registerService(service.getDefinition(), service);
-        return service;
-    }
+//    @Bean 
+//    public TestService createService() {
+//        TestService service = new TestService();
+//        controlPlane.registerService(service.getDefinition(), service);
+//        return service;
+//    }
     
 }
