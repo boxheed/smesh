@@ -1,11 +1,15 @@
 package com.fizzpod.smesh.hz.planes.control;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import com.fizzpod.smesh.planes.control.ServiceDefinition;
 
-public class HzServiceDefinition implements ServiceDefinition {
+public class HzServiceDefinition implements ServiceDefinition, Serializable {
+
+    private static final long serialVersionUID = -3894325186282124626L;
 
     private String name;
     
@@ -27,7 +31,7 @@ public class HzServiceDefinition implements ServiceDefinition {
 
     @Override
     public Collection<String> getRoutes() {
-        return null;
+        return Collections.unmodifiableCollection(routes);
     }
-
+    
 }

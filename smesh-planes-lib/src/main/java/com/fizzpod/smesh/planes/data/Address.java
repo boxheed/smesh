@@ -1,4 +1,5 @@
-package com.fizzpod.smesh.planes.data;
+package com.fizzpod.smesh
+.planes.data;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
-@JsonPropertyOrder({ "name", "destination"})
+@JsonPropertyOrder({ "method", "path"})
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 7380322958623380412L;
@@ -31,8 +32,8 @@ public class Address implements Serializable {
      * The address to send the payload to (required).
      * 
      */
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("method")
+    private String method;
     
     /**
      * The destination
@@ -40,38 +41,31 @@ public class Address implements Serializable {
      * The address to send the payload to (required).
      * 
      */
-    @JsonProperty("destination")
-    private String destination;
+    @JsonProperty("path")
+    private String path;
     
     
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("destination")
-    public String getDestination() {
-        return destination;
+    @JsonProperty("path")
+    public String getPath() {
+        return path;
     }
 
-    @JsonProperty("destination")
-    public void setDestination(String destination) {
-        this.destination = destination;
+    @JsonProperty("path")
+    public void setPath(String path) {
+        this.path = path;
     }
     
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    @JsonProperty("method")
+    public String getMethod() {
+        return method;
     }
 
-    /**
-     * The Trace ID
-     * <p>
-     * The trace id for the span.
-     * 
-     * @param name The name
-     */
     @JsonProperty("name")
     public void setName(String name) {
-        this.name = name;
+        this.method = name;
     }
 
     @JsonAnyGetter
@@ -89,8 +83,8 @@ public class Address implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((additionalProperties == null) ? 0 : additionalProperties.hashCode());
-        result = prime * result + ((destination == null) ? 0 : destination.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((path == null) ? 0 : path.hashCode());
+        result = prime * result + ((method == null) ? 0 : method.hashCode());
         return result;
     }
 
@@ -108,22 +102,22 @@ public class Address implements Serializable {
                 return false;
         } else if (!additionalProperties.equals(other.additionalProperties))
             return false;
-        if (destination == null) {
-            if (other.destination != null)
+        if (path == null) {
+            if (other.path != null)
                 return false;
-        } else if (!destination.equals(other.destination))
+        } else if (!path.equals(other.path))
             return false;
-        if (name == null) {
-            if (other.name != null)
+        if (method == null) {
+            if (other.method != null)
                 return false;
-        } else if (!name.equals(other.name))
+        } else if (!method.equals(other.method))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Address [name=" + name + ", destination=" + destination + ", additionalProperties="
+        return "Address [name=" + method + ", destination=" + path + ", additionalProperties="
                 + additionalProperties + "]";
     }
 

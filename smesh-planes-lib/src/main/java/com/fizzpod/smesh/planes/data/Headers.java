@@ -1,7 +1,9 @@
 package com.fizzpod.smesh.planes.data;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -15,20 +17,25 @@ public class Headers implements Serializable {
     private static final long serialVersionUID = 4983376862475925020L;
 
     @JsonProperty("headers")
-    private Map<String, String> headers = new HashMap<>();
+    private Map<String, Collection<String>> headers = new HashMap<>();
     
     @JsonProperty("headers")
-    public Map<String, String> getHeaders() {
+    public Map<String, Collection<String>> getHeaders() {
         return this.headers;
     }
     
     @JsonProperty("headers")
-    public void setHeaders(Map<String, String> headers) {
+    public void setHeaders(Map<String, Collection<String>> headers) {
         this.headers = headers;
     }
     
     public void add(String key, String value) {
-        this.headers.put(key, value);
+        Collection<String> values = this.headers.get(key);
+        if(values == null) {
+            values = new LinkedList<>();
+        }
+        values.add(value);
+        this.headers.put(key, values);
     }
 
     @Override

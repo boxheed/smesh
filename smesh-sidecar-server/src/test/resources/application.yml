@@ -1,0 +1,5 @@
+
+      
+smesh:
+  services:
+    filecontextpath: file:C:/temp/smesh-service-context.xml

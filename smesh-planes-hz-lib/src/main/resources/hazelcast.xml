@@ -261,6 +261,15 @@
 <!--         </message-listeners> -->
     </topic>
 
+	<multimap name="service-map">
+        <backup-count>1</backup-count>
+        <value-collection-type>SET</value-collection-type>
+        <!-- <merge-policy batch-size="100">com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy> -->
+    </multimap>
+    <set name="service-set">
+        <backup-count>1</backup-count>
+        <merge-policy batch-size="100">com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+    </set>
 <!-- 
     <multimap name="default">
         <backup-count>1</backup-count>
