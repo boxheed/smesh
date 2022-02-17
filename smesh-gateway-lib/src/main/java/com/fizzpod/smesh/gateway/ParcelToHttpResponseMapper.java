@@ -1,4 +1,4 @@
-package com.fizzpod.smesh.application.gateway;
+package com.fizzpod.smesh.gateway;
 
 import java.util.Collection;
 import java.util.Map.Entry;

@@ -1,4 +1,4 @@
-package com.fizzpod.smesh.application.gateway;
+package com.fizzpod.smesh.gateway;
 
 import java.io.IOException;
 import java.io.PrintStream;

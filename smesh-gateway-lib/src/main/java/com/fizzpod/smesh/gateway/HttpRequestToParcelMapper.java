@@ -1,4 +1,4 @@
-package com.fizzpod.smesh.application.gateway;
+package com.fizzpod.smesh.gateway;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -18,7 +18,7 @@ import com.fizzpod.smesh.planes.data.Headers;
 import com.fizzpod.smesh.planes.data.Parameters;
 import com.fizzpod.smesh.planes.data.Parcel;
 
-public class HttpRequestToMeshRequestMapper {
+public class HttpRequestToParcelMapper {
 
     public Parcel map(HttpServletRequest request) {
         Parcel meshRequest = new Parcel();
@@ -31,7 +31,6 @@ public class HttpRequestToMeshRequestMapper {
     }
 
     private void copyIp(HttpServletRequest request, Parcel meshRequest) {
-        // TODO skip for now
     }
 
     private void copyMethod(HttpServletRequest request, Parcel meshRequest) {

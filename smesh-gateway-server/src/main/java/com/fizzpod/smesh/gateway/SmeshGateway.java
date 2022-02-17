@@ -1,4 +1,4 @@
-package com.fizzpod.smesh.application.gateway;
+package com.fizzpod.smesh.gateway;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootApplication
+import com.fizzpod.smesh.gateway.SmeshApplicationBanner;
+
+@SpringBootApplication()
 public class SmeshGateway {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SmeshGateway.class);

@@ -1,4 +1,4 @@
-package com.fizzpod.smesh.application;
+package com.fizzpod.smesh.sidecar;
 
 import java.io.IOException;
 import java.io.PrintStream;

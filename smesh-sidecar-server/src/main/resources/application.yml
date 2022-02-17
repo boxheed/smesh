@@ -1,5 +1,5 @@
 server:
-  port: 2468
+  port: 2469
 
 security:
   basic:

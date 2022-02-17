@@ -1,4 +1,4 @@
-package com.fizzpod.smesh.application.gateway;
+package com.fizzpod.smesh.sidecar;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,7 +10,7 @@ import com.fizzpod.smesh.hz.planes.control.HzServiceDefinition;
 import com.fizzpod.smesh.planes.control.ServiceDefinition;
 import com.fizzpod.smesh.planes.data.Parcel;
 
-public class TestService implements Function<Parcel, Parcel>{
+public class TestService implements Function<Parcel, Parcel> {
 
     @Override
     public Parcel apply(Parcel request) {

@@ -1,4 +1,4 @@
-package com.fizzpod.smesh.application.gateway;
+package com.fizzpod.smesh.gateway;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +17,8 @@ public class SmeshGatewayConfiguration {
     ControlPlane controlPlane;
     
     @Bean
-    public HttpRequestToMeshRequestMapper getInboundMaper() {
-        return new HttpRequestToMeshRequestMapper();
+    public HttpRequestToParcelMapper getInboundMaper() {
+        return new HttpRequestToParcelMapper();
     }
 
     @Bean

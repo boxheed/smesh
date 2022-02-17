@@ -2,7 +2,9 @@ rootProject.name = 'smesh'
 include 'smesh-planes-lib',
   'smesh-planes-hz-lib',
   'smesh-planes-hz-spring-lib',
+  'smesh-gateway-lib',
   'smesh-gateway-server',
+  'smesh-sidecar-lib',
   'smesh-sidecar-server'
 
 //  'smesh-service-core-lib',

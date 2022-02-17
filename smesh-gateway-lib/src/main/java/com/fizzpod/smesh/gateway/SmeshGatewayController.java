@@ -1,4 +1,4 @@
-package com.fizzpod.smesh.application.gateway;
+package com.fizzpod.smesh.gateway;
 
 import java.util.concurrent.ExecutionException;
 
@@ -23,7 +23,7 @@ public class SmeshGatewayController {
     private DataPlane dataPlane;
 
     @Autowired
-    private HttpRequestToMeshRequestMapper inboundMapper;
+    private HttpRequestToParcelMapper inboundMapper;
 
     @Autowired
     private ParcelToHttpResponseMapper outboundMapper;
