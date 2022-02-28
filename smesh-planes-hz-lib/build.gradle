@@ -8,6 +8,12 @@ dependencies {
   
   implementation 'com.google.guava:guava'
   
+  implementation 'com.google.code.gson:gson'
+  
+  implementation 'com.jayway.jsonpath:json-path'
+        
+  implementation 'org.apache.commons:commons-lang3'
+  
   api 'com.hazelcast:hazelcast'
 
   testImplementation 'junit:junit'

@@ -24,21 +24,22 @@ public class HzRouter implements Router, Serializable {
     }
 
     public HzRoute getRoute(Parcel parcel) {
-        List<UUID> memberIds = new LinkedList<>();
-        String address = parcel.getAddress();
-        for (HzServiceEntry entry : serviceRoutes) {
-            for (String route : entry.getDefinition().getRoutes()) {
-                if (address.matches(route)) {
-                    memberIds.add(entry.getMemberId());
-                    break;
-                }
-            }
-        }
-        Collections.shuffle(memberIds);
-        if(memberIds.size() == 0) {
-            throw new RuntimeException("No route to" + parcel.getAddress());
-        }
-        return new HzRoute(hazelcast, Collections.singleton(memberIds.get(0)));
+//        List<UUID> memberIds = new LinkedList<>();
+//        String address = parcel.getAddress();
+//        for (HzServiceEntry entry : serviceRoutes) {
+//            for (String route : entry.getDefinition().getRoutes()) {
+//                if (address.matches(route)) {
+//                    memberIds.add(entry.getMemberId());
+//                    break;
+//                }
+//            }
+//        }
+//        Collections.shuffle(memberIds);
+//        if(memberIds.size() == 0) {
+//            throw new RuntimeException("No route to" + parcel.getAddress());
+//        }
+//        return new HzRoute(hazelcast, Collections.singleton(memberIds.get(0)));
+        return null;
     }
 
 }

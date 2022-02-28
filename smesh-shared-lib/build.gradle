@@ -1,0 +1,14 @@
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot'
+
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'commons-io:commons-io'
+    implementation 'org.slf4j:slf4j-api'
+
+    implementation 'com.github.dtmo.jfiglet:jfiglet:1.0.1'
+
+    testImplementation 'junit:junit'
+    testImplementation 'org.mockito:mockito-all'
+}

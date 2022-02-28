@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import com.fizzpod.smesh.gateway.SmeshApplicationBanner;
+import com.fizzpod.smesh.common.spring.SmeshApplicationBanner;
 
 @SpringBootApplication()
 public class SmeshGateway {

@@ -22,6 +22,7 @@ dependencies {
     implementation project(':smesh-planes-hz-lib')
     implementation project(':smesh-planes-hz-spring-lib')
     implementation project(':smesh-gateway-lib')
+    implementation project(':smesh-shared-lib')
 
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

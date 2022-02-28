@@ -18,7 +18,6 @@ public class OkHttpResponseToParcelMapper {
         return meshResponse;
     }
 
-
     private void copyResponseCode(Response response, Parcel meshResponse) {
         int responseCode = response.code();
         meshResponse.setStatus(responseCode);
@@ -26,14 +25,14 @@ public class OkHttpResponseToParcelMapper {
 
     private void copyBody(Response response, Parcel meshResponse) {
         ResponseBody body = response.body();
-        if(body.contentLength() > 0) {
-            try {
-                byte[] bodyBytes = body.bytes();
-                meshResponse.setBody(bodyBytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//        if(body.contentLength() > 0) {
+        try {
+            byte[] bodyBytes = body.bytes();
+            meshResponse.setBody(bodyBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+//        }
     }
 
     private void copyHeaders(Response response, Parcel meshResponse) {

@@ -1,11 +1,16 @@
 package com.fizzpod.smesh.planes.control;
 
-import java.util.Collection;
+import com.fizzpod.smesh.planes.data.ParcelFilter;
+import com.fizzpod.smesh.planes.data.ServiceSelector;
 
 public interface ServiceDefinition {
 
     String getName();
-    
-    Collection<String> getRoutes();
-    
+
+    ServiceSelector[] getSelectors();
+
+    ParcelFilter[] getRequestFilters();
+
+    ParcelFilter[] getResponseFilters();
+
 }

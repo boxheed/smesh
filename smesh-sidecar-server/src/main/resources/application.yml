@@ -16,11 +16,33 @@ spring:
     config:
       enabled: false
 
-      
-smesh:
-  services:
-    filecontextpath: file:C:/temp/smesh-service-context.xml
+#smesh:
+#  service: 
+#    name: aws-hello
+#    url: https://sg86bqygsk.execute-api.eu-west-2.amazonaws.com/hello
+#    selectors: 
+#      - address:/aws/hello.*
+#      - method:GET
+#    requestFilters:
+#      - logger:INFO
+#      - header:REMOVE:Host
+#    responseFilters:
+#        - logger:INFO
 
+smesh:
+  service: 
+    name: fruit-service
+    url: http://10.154.1.5:9003/api
+    selectors: 
+      - address:/number.*
+      - method:GET
+    requestFilters:
+      - logger:INFO
+      - header:REMOVE:Host
+    responseFilters:
+      - logger:INFO
   
+  
+
   
   

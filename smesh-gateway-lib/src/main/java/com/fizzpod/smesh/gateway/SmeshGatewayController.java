@@ -28,7 +28,7 @@ public class SmeshGatewayController {
     @Autowired
     private ParcelToHttpResponseMapper outboundMapper;
 
-    @RequestMapping(path = "*")
+    @RequestMapping(path = "**")
     public ResponseEntity<?> handleRequest(final HttpServletRequest request) throws InterruptedException, ExecutionException {
         Parcel parcel = inboundMapper.map(request);
 

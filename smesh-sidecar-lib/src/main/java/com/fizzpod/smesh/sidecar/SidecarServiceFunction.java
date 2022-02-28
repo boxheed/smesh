@@ -3,11 +3,18 @@ package com.fizzpod.smesh.sidecar;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 import com.fizzpod.smesh.hz.planes.control.HzServiceDefinition;
+import com.fizzpod.smesh.hz.planes.control.HzServiceDefinitionBuilder;
 import com.fizzpod.smesh.planes.control.ServiceDefinition;
+import com.fizzpod.smesh.planes.data.Parameters;
 import com.fizzpod.smesh.planes.data.Parcel;
 
 import okhttp3.OkHttpClient;
@@ -18,6 +25,11 @@ import okhttp3.Response;
 public class SidecarServiceFunction implements Function<Parcel, Parcel> {
 
     private final OkHttpClient client = new OkHttpClient();
+    private String baseUrl;
+    
+    public SidecarServiceFunction(String url) {
+        this.baseUrl = url;
+    }
 
     @Override
     public Parcel apply(Parcel input) {
@@ -30,7 +42,7 @@ public class SidecarServiceFunction implements Function<Parcel, Parcel> {
             throw new RuntimeException(e);
         }
         return output;
-        
+
     }
 
     private Parcel createOutput(Response response, Parcel input) {
@@ -40,17 +52,17 @@ public class SidecarServiceFunction implements Function<Parcel, Parcel> {
     private Request createRequest(Parcel parcel) {
         Builder builder = new Request.Builder();
         builder = addUrl(builder, parcel);
-        //TODO figure out the problem with the headers
-//        builder = addHeaders(builder, parcel);
+        builder = addHeaders(builder, parcel);
         builder = addBody(builder, parcel);
         return builder.build();
     }
 
     private Builder addUrl(Builder builder, Parcel parcel) {
-        String path = parcel.getAddress();
-        // TODO update this URL with the real path bits need to be injected in as
-        // configuration
-        return new Request.Builder().url("https://sg86bqygsk.execute-api.eu-west-2.amazonaws.com/hello");
+        UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromUriString(baseUrl);
+        urlBuilder.path(parcel.getAddress());
+        String url = urlBuilder.build().encode().toUriString();
+        
+        return new Request.Builder().url(url);
     }
 
     private Builder addHeaders(Builder builder, Parcel parcel) {
@@ -64,6 +76,7 @@ public class SidecarServiceFunction implements Function<Parcel, Parcel> {
     }
 
     private Builder addBody(Builder builder, Parcel parcel) {
+        // TODO do other methods
         Parcel.Method method = parcel.getMethod();
         switch (method) {
         case GET:
@@ -74,12 +87,6 @@ public class SidecarServiceFunction implements Function<Parcel, Parcel> {
             break;
         }
         return builder;
-    }
-
-    public ServiceDefinition getDefinition() {
-        Collection<String> routes = Arrays.asList(new String[] { "/testy.*" });
-        HzServiceDefinition definition = new HzServiceDefinition(this.getClass().getName(), routes);
-        return definition;
     }
 
 }

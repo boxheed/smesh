@@ -29,6 +29,10 @@ public class Headers implements Serializable {
         this.headers = headers;
     }
     
+    public void remove(String key) {
+        this.headers.remove(key);
+    }
+    
     public void add(String key, String value) {
         Collection<String> values = this.headers.get(key);
         if(values == null) {

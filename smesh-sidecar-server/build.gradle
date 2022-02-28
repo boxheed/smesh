@@ -12,7 +12,6 @@ dependencies {
 
     implementation 'com.github.jknack:handlebars-helpers'
 
-
     implementation 'com.github.dtmo.jfiglet:jfiglet:1.0.1'
 
     implementation 'org.apache.commons:commons-lang3'
@@ -22,6 +21,7 @@ dependencies {
     implementation project(':smesh-planes-hz-lib')
     implementation project(':smesh-planes-hz-spring-lib')
     implementation project(':smesh-sidecar-lib')
+    implementation project(':smesh-shared-lib')
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
